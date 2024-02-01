@@ -1,13 +1,14 @@
 from PyPDF2 import PdfReader
 from openai import OpenAI
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, session
 import tempfile
 import os
 
 client = OpenAI()
 
 app = Flask(__name__, template_folder='template')
-app.config['UPLOAD_FOLDER'] = tempfile.mkdtemp() 
+app.config['UPLOAD_FOLDER'] = tempfile.mkdtemp()
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 @app.route('/chatPDF')
 def index():
@@ -24,31 +25,35 @@ def extract_text_from_pdf(pdf_file):
 @app.route('/resposta', methods=['POST'])
 def resposta():
     uploaded_file = request.files['pdf_file']
-    
+
     if uploaded_file.filename != '':
         pdf_file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
         uploaded_file.save(pdf_file_path)
-
-    # Extrair texto do PDF
-    pdf_text = extract_text_from_pdf(pdf_file_path)
+        session['pdf_file_path'] = pdf_file_path  
 
     
     pergunta = request.form['pergunta']
-    conteudo = "Você está respondendo a perguntas sobre o conteúdo do PDF."
+    conteudo = "Você está respondendo a perguntas sobre o conteúdo do PDF, sendo que você é um procurador experiente do município do estado do Rio de Janeiro, responda sem criatividade."
 
-    completion = client.chat.completions.create(
-    model="gpt-3.5-turbo",
-    messages=[
-            {"role": "system", "content": conteudo},
-            {"role": "user", "content": pergunta},
-            {"role": "assistant", "content": pdf_text}
-        ]
-    )
 
-    resposta = completion.choices[0].message.content
+    pdf_file_path = session.get('pdf_file_path', '')
 
-    return render_template('index.html', resposta = resposta, pergunta = pergunta)
+    if pdf_file_path:
+        
+        pdf_text = extract_text_from_pdf(pdf_file_path)
 
+        completion = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": conteudo},
+                {"role": "user", "content": pergunta},
+                {"role": "assistant", "content": pdf_text}
+            ]
+        )
+
+        resposta = completion.choices[0].message.content
+    
+    return render_template('index.html', resposta=resposta, pergunta=pergunta)
 
 if __name__ == '__main__':
     app.run(debug=True)
