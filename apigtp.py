@@ -33,7 +33,7 @@ def resposta():
 
     
     pergunta = request.form['pergunta']
-    conteudo = "Você está respondendo a perguntas sobre o conteúdo do PDF, sendo que você é um procurador experiente do município do estado do Rio de Janeiro, responda sem criatividade."
+    conteudo = "Você está respondendo a perguntas sobre o conteúdo do PDF, sendo que você é um procurador experiente do município do estado do Rio de Janeiro."
 
 
     pdf_file_path = session.get('pdf_file_path', '')
@@ -52,7 +52,7 @@ def resposta():
         )
 
         resposta = completion.choices[0].message.content
-    
+    print(pdf_text)
     return render_template('index.html', resposta=resposta, pergunta=pergunta)
 
 if __name__ == '__main__':
