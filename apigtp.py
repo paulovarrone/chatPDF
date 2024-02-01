@@ -33,21 +33,21 @@ def resposta():
     pdf_text = extract_text_from_pdf(pdf_file_path)
 
     
-    pergunta_usuario = "Em relação ao pdf, extraia: Nome:, Processo:, Advogado:, Ação:, Autor: e Requerido:"
+    pergunta = request.form['pergunta']
     conteudo = "Você está respondendo a perguntas sobre o conteúdo do PDF."
 
     completion = client.chat.completions.create(
     model="gpt-3.5-turbo",
     messages=[
             {"role": "system", "content": conteudo},
-            {"role": "user", "content": pergunta_usuario},
+            {"role": "user", "content": pergunta},
             {"role": "assistant", "content": pdf_text}
         ]
     )
 
     resposta = completion.choices[0].message.content
 
-    return render_template('index.html', resposta = resposta)
+    return render_template('index.html', resposta = resposta, pergunta = pergunta)
 
 
 if __name__ == '__main__':
