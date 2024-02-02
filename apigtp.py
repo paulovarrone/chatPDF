@@ -63,9 +63,17 @@ def resposta():
 
         resposta = completion.choices[0].message.content
 
+        tokens_input = num_tokens_from_string(conteudo +  pergunta + pdf_text, "cl100k_base")
+        tokens_output = num_tokens_from_string(resposta, "cl100k_base")
+        tokens_estimados = tokens_input + tokens_output
+
+        custo_input = (tokens_input / 1000) * 0.0010  
+        custo_output = (tokens_output / 1000) * 0.0020  
+        custo_total = ((custo_input + custo_output) * 1)
+        custo_acumulado[0] += custo_total
 
     print(pdf_text)
-    return render_template('index.html', resposta=resposta, pergunta=pergunta)
+    return render_template('index.html', resposta=resposta, pergunta=pergunta, tokens_estimados = tokens_estimados, custo_total = custo_total, custo_acumulado = custo_acumulado[0])
 
 if __name__ == '__main__':
     app.run(debug=True)

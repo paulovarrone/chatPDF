@@ -7,25 +7,48 @@
     <title>Chat-PGM</title>
 </head>
 <body>
-    <h1>ChatPGM - PDF</h1>
+    <div id="corpo">
 
-    <form action="/resposta" method="POST" enctype="multipart/form-data">
-        <label for="pdf_file">Coloque seu PDF aqui:</label>
-        <input type="file" name="pdf_file" accept=".pdf" >
-        <br>
+        <div id="chat">
+            <h1>ChatPGM - PDF</h1>
+            <form action="/resposta" method="POST" enctype="multipart/form-data">
+                <label for="pdf_file">Coloque seu PDF aqui:</label>
+                <input type="file" name="pdf_file" accept=".pdf" >
+                <br>
+                
         
+                <label for="pergunta">Faça sua pergunta:</label>
+                <textarea name="pergunta" rows="4" cols="50" required></textarea>
+                <br>
+        
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
 
-        <label for="pergunta">Faça sua pergunta:</label>
-        <textarea name="pergunta" rows="4" cols="50" required></textarea>
-        <br>
+        <div id="precos">
+            <div class="preco">
+                <h3>Tokens</h3>
+                <p class="tokens">{{ tokens_estimados }}</p>
+            </div>
+        
+            <div class="preco">
+                <h3>Preço</h3>
+                <p class="tokens">R${{ custo_total }}</p>
+            </div>
 
-        <button type="submit">Enviar</button>
-    </form>
+            <div class="preco">
+                <h3>Preço A</h3>
+                <p class="tokens">R${{ custo_acumulado }}</p>
+            </div>
+        </div>
+    </div>
 
-    {% if resposta %}
-    <h2>Resposta:</h2>
-    <pre id="resposta">{{ resposta }}</pre>
-    {% endif %}
+    <div id="resp">
+        {% if resposta %}
+        <h2>Resposta:</h2>
+        <pre id="resposta">{{ resposta }}</pre>
+        {% endif %}
+    </div>
 
 </body>
 </html>

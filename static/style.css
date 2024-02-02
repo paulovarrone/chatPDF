@@ -13,6 +13,7 @@ body {
 h1 {
     font-size: 28px;
     color: #333;
+    text-align: center;
 }
 
 form {
@@ -61,4 +62,19 @@ pre#resposta {
     line-height: 35px;
     width: 1200px;
     text-align: justify;
+}
+
+#corpo {
+    display: flex;
+    flex-direction: column;
+}
+
+#precos {
+    display: flex;
+    gap: 100px;
+}
+
+.preco {
+    display: flex;
+    flex-direction: column;
 }
