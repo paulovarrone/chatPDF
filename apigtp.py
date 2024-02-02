@@ -33,7 +33,7 @@ def resposta():
 
     
     pergunta = request.form['pergunta']
-    conteudo = "Você está respondendo a perguntas sobre o conteúdo do PDF, sendo que você é um procurador experiente do município do estado do Rio de Janeiro."
+    conteudo = "Você está respondendo a perguntas sobre o conteúdo do documento, fique atento e extraia cada palavra para conseguir interpretar bem as perguntas, sendo que você é um procurador experiente do município do estado do Rio de Janeiro."
 
 
     pdf_file_path = session.get('pdf_file_path', '')
@@ -43,7 +43,7 @@ def resposta():
         pdf_text = extract_text_from_pdf(pdf_file_path)
 
         completion = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-3.5-turbo-1106",
             messages=[
                 {"role": "system", "content": conteudo},
                 {"role": "user", "content": pergunta},
