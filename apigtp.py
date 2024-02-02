@@ -3,12 +3,22 @@ from openai import OpenAI
 from flask import Flask, request, render_template, jsonify, session
 import tempfile
 import os
+import tiktoken
 
 client = OpenAI()
 
 app = Flask(__name__, template_folder='template')
 app.config['UPLOAD_FOLDER'] = tempfile.mkdtemp()
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
+
+custo_acumulado = [0]
+
+def num_tokens_from_string(string: str, encoding_name: str) -> int:
+    encoding = tiktoken.get_encoding(encoding_name)
+    num_tokens = len(encoding.encode(string))
+    return num_tokens
+
 
 @app.route('/chatPDF')
 def index():
@@ -52,6 +62,8 @@ def resposta():
         )
 
         resposta = completion.choices[0].message.content
+
+
     print(pdf_text)
     return render_template('index.html', resposta=resposta, pergunta=pergunta)
 
