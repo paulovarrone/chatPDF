@@ -1,3 +1,7 @@
+body {
+    background-image: url(./photos/RJ10.jpg);
+}
+
 #e {
     display: flex;
     flex-direction: column;

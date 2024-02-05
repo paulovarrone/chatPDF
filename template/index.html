@@ -11,7 +11,7 @@
 
         <div id="chat">
             <h1>ChatPGM - Documentos</h1>
-            <form action="/chatpgm" method="POST" enctype="multipart/form-data">
+            <form action="/resposta" method="POST" enctype="multipart/form-data">
                 <label for="pdf_file">Coloque arquivo PDF ou Word aqui:</label>
                 <input type="file" name="uploaded_file" accept=".pdf, .docx" >
                 <br>
@@ -22,33 +22,35 @@
                 <br>
         
                 <button type="submit">Enviar</button>
+                <div id="precos">
+                    <div class="preco">
+                        <h3>Tokens</h3>
+                        <p class="tokens">{{ tokens_estimados }}</p>
+                    </div>
+                
+                    <div class="preco">
+                        <h3>Preço</h3>
+                        <p class="tokens">R${{ custo_total }}</p>
+                    </div>
+        
+                    <div class="preco">
+                        <h3>Preço Acumulado</h3>
+                        <p class="tokens">R${{ custo_acumulado }}</p>
+                    </div>
+                </div>
             </form>
         </div>
 
-        <div id="precos">
-            <div class="preco">
-                <h3>Tokens</h3>
-                <p class="tokens">{{ tokens_estimados }}</p>
-            </div>
-        
-            <div class="preco">
-                <h3>Preço</h3>
-                <p class="tokens">R${{ custo_total }}</p>
-            </div>
-
-            <div class="preco">
-                <h3>Preço Acumulado</h3>
-                <p class="tokens">R${{ custo_acumulado }}</p>
-            </div>
-        </div>
     </div>
 
+    {% if resposta %}
     <div id="resp">
-        {% if resposta %}
+        
         <h2>Resposta:</h2>
         <pre id="resposta">{{ resposta }}</pre>
-        {% endif %}
+        
     </div>
-
+    {% endif %}
+    
 </body>
 </html>

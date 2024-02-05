@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Timeout</title>
+</head>
+<body>
+    <div id="e">
+        <h1>Erro de conexão</h1>
+        <p class="erro">{{ error_message }}</p>
+        <form action="{{ url_for('index') }}" method="get">
+            <button class="btn" type="submit">Voltar</button>
+        </form>
+    </div>
+    
+</body>
+</html>
