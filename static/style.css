@@ -22,7 +22,7 @@ form {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    max-width: 400px; /* Define a largura máxima do formulário */
+    max-width: 435px; /* Define a largura máxima do formulário */
 }
 
 label {

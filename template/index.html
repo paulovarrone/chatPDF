@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"">
-    <title>Chat-PGM</title>
+    <title>Chat-Docs</title>
 </head>
 <body>
     <div id="corpo">
 
         <div id="chat">
-            <h1>ChatPGM - PDF</h1>
+            <h1>ChatPGM - Documentos</h1>
             <form action="/resposta" method="POST" enctype="multipart/form-data">
-                <label for="pdf_file">Coloque seu PDF aqui:</label>
+                <label for="pdf_file">Coloque arquivo PDF ou Word aqui:</label>
                 <input type="file" name="uploaded_file" accept=".pdf, .docx" >
                 <br>
                 
@@ -37,7 +37,7 @@
             </div>
 
             <div class="preco">
-                <h3>Preço A</h3>
+                <h3>Preço Acumulado</h3>
                 <p class="tokens">R${{ custo_acumulado }}</p>
             </div>
         </div>
