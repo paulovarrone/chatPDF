@@ -41,7 +41,7 @@ def extract_text_from_pdf(pdf_file):
     except Exception:
         return f"Erro, documento não suportado - use WORD ou PDF"
 
-@app.route('/resposta', methods=['POST'])
+@app.route('/chatpgm', methods=['POST'])
 def resposta():
     try:
         uploaded_file = request.files['uploaded_file']

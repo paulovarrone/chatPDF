@@ -1,3 +1,10 @@
+body {
+    background-image: url('photos/riotrans.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
 #e {
     display: flex;
     flex-direction: column;
