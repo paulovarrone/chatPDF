@@ -75,12 +75,15 @@ def resposta():
 
         custo_input = (tokens_input / 1000) * 0.0010  
         custo_output = (tokens_output / 1000) * 0.0020  
+
         custo_total = ((custo_input + custo_output) * 1)
-        custo_redondo = round(custo_total, 3)
-        custo_acumulado[0] += custo_redondo
+        custo_total_redondo = round(custo_total, 3)
+
+        custo_acumulado[0] += custo_total_redondo
+        custo_acumulado_redondo = round(custo_acumulado[0], 3)
     
     print(text)
-    return render_template('index.html', resposta=resposta, pergunta=pergunta, tokens_estimados = tokens_estimados, custo_redondo = custo_redondo, custo_acumulado = custo_acumulado[0])
+    return render_template('index.html', resposta=resposta, pergunta=pergunta, tokens_estimados = tokens_estimados, custo_total = custo_total_redondo, custo_acumulado = custo_acumulado_redondo)
 
 if __name__ == '__main__':
     app.run(debug=True)
