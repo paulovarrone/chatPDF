@@ -91,11 +91,7 @@ def resposta():
         
         print(text)
         return render_template('index.html', resposta=resposta, pergunta=pergunta, tokens_estimados = tokens_estimados, custo_total = custo_total_redondo, custo_acumulado = custo_acumulado_redondo)
-    
-    except TimeoutError as e:
-        e = f"Verifique a conexão com a internet"
-        return render_template('timeout.html', error_message=e) 
-    
+     
     except Exception as e:
         e = f"Por favor, use WORD ou PDF"
         return render_template('erro.html', error_message=e)
