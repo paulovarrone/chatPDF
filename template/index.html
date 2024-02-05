@@ -13,7 +13,7 @@
             <h1>ChatPGM - PDF</h1>
             <form action="/resposta" method="POST" enctype="multipart/form-data">
                 <label for="pdf_file">Coloque seu PDF aqui:</label>
-                <input type="file" name="pdf_file" accept=".pdf" >
+                <input type="file" name="uploaded_file" accept=".pdf, .docx" >
                 <br>
                 
         
@@ -33,7 +33,7 @@
         
             <div class="preco">
                 <h3>Preço</h3>
-                <p class="tokens">R${{ custo_total }}</p>
+                <p class="tokens">R${{ custo_redondo }}</p>
             </div>
 
             <div class="preco">

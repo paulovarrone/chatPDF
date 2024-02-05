@@ -4,6 +4,7 @@ from flask import Flask, request, render_template, jsonify, session
 import tempfile
 import os
 import tiktoken
+import docx2txt
 
 client = OpenAI()
 
@@ -24,6 +25,9 @@ def num_tokens_from_string(string: str, encoding_name: str) -> int:
 def index():
     return render_template('index.html')
 
+def extract_text_from_word(word_file):
+    word_text = docx2txt.process(word_file)
+    return word_text
 
 def extract_text_from_pdf(pdf_file):
     pdf_text = ""
@@ -34,46 +38,50 @@ def extract_text_from_pdf(pdf_file):
 
 @app.route('/resposta', methods=['POST'])
 def resposta():
-    uploaded_file = request.files['pdf_file']
+    uploaded_file = request.files['uploaded_file']
 
     if uploaded_file.filename != '':
-        pdf_file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
-        uploaded_file.save(pdf_file_path)
-        session['pdf_file_path'] = pdf_file_path  
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
+        uploaded_file.save(file_path)
+        session['file_path'] = file_path  
 
     
     pergunta = request.form['pergunta']
     conteudo = "Você está respondendo a perguntas sobre o conteúdo do documento, fique atento e extraia cada palavra para conseguir interpretar bem as perguntas, sendo que você é um procurador experiente do município do estado do Rio de Janeiro."
 
 
-    pdf_file_path = session.get('pdf_file_path', '')
+    file_path = session.get('file_path', '')
 
-    if pdf_file_path:
+    if file_path:
+        if file_path.endswith('.pdf'):
+            text = extract_text_from_pdf(file_path)
+        elif file_path.endswith('.docx'):
+            text = extract_text_from_word(file_path)
         
-        pdf_text = extract_text_from_pdf(pdf_file_path)
 
         completion = client.chat.completions.create(
             model="gpt-3.5-turbo-1106",
             messages=[
                 {"role": "system", "content": conteudo},
                 {"role": "user", "content": pergunta},
-                {"role": "assistant", "content": pdf_text}
+                {"role": "assistant", "content": text}
             ]
         )
 
         resposta = completion.choices[0].message.content
 
-        tokens_input = num_tokens_from_string(conteudo +  pergunta + pdf_text, "cl100k_base")
+        tokens_input = num_tokens_from_string(conteudo +  pergunta + text, "cl100k_base")
         tokens_output = num_tokens_from_string(resposta, "cl100k_base")
         tokens_estimados = tokens_input + tokens_output
 
         custo_input = (tokens_input / 1000) * 0.0010  
         custo_output = (tokens_output / 1000) * 0.0020  
         custo_total = ((custo_input + custo_output) * 1)
-        custo_acumulado[0] += custo_total
-
-    print(pdf_text)
-    return render_template('index.html', resposta=resposta, pergunta=pergunta, tokens_estimados = tokens_estimados, custo_total = custo_total, custo_acumulado = custo_acumulado[0])
+        custo_redondo = round(custo_total, 3)
+        custo_acumulado[0] += custo_redondo
+    
+    print(text)
+    return render_template('index.html', resposta=resposta, pergunta=pergunta, tokens_estimados = tokens_estimados, custo_redondo = custo_redondo, custo_acumulado = custo_acumulado[0])
 
 if __name__ == '__main__':
     app.run(debug=True)
