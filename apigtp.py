@@ -15,15 +15,14 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 custo_acumulado = [0]
 
+@app.route('/chatPDF')
+def index():
+    return render_template('index.html')
+
 def num_tokens_from_string(string: str, encoding_name: str) -> int:
     encoding = tiktoken.get_encoding(encoding_name)
     num_tokens = len(encoding.encode(string))
     return num_tokens
-
-
-@app.route('/chatPDF')
-def index():
-    return render_template('index.html')
 
 def extract_text_from_word(word_file):
     word_text = docx2txt.process(word_file)
