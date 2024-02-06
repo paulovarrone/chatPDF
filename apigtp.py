@@ -39,6 +39,7 @@ def extract_text_from_pdf(pdf_file):
 @app.route('/resposta', methods=['POST'])
 def resposta():
     try:
+
         uploaded_file = request.files['uploaded_file']
 
         if uploaded_file.filename != '':
@@ -86,7 +87,8 @@ def resposta():
         
         print(text)
         return render_template('index.html', resposta=resposta, pergunta=pergunta, tokens_estimados = tokens_estimados, custo_total = custo_total_redondo, custo_acumulado = custo_acumulado_redondo)
-     
+    
+        
     except Exception as e:
         e = f"Por favor, use WORD ou PDF"
         return render_template('erro.html', error_message=e)
