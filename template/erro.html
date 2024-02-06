@@ -6,8 +6,9 @@
 </head>
 <body>
     <div id="e">
-        <h1>Documento não suportado</h1>
-        <p class="erro">{{ error_message }}</p>
+        <h1>Imprecisão detectada</h1>
+        <p class="erro">Por favor, verifique o formato do arquivo e(ou) a conexão com a Internet.</p>
+        <p class="erro">Arquivos suportados: PDF e Word.</p>
         <form action="{{ url_for('index') }}" method="get">
             <button class="btn" type="submit">Voltar</button>
         </form>

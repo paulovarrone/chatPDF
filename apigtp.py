@@ -89,9 +89,8 @@ def resposta():
         return render_template('index.html', resposta=resposta, pergunta=pergunta, tokens_estimados = tokens_estimados, custo_total = custo_total_redondo, custo_acumulado = custo_acumulado_redondo)
     
         
-    except Exception as e:
-        e = f"Por favor, use WORD ou PDF"
-        return render_template('erro.html', error_message=e)
+    except Exception:
+        return render_template('erro.html')
     
     
 if __name__ == '__main__':
