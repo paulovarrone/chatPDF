@@ -25,21 +25,16 @@ def num_tokens_from_string(string: str, encoding_name: str) -> int:
     return num_tokens
 
 def extract_text_from_word(word_file):
-    try:
-        word_text = docx2txt.process(word_file)
-        return word_text
-    except Exception:
-        return f"Erro, documento não suportado - use WORD ou PDF"
+    word_text = docx2txt.process(word_file)
+    return word_text
 
 def extract_text_from_pdf(pdf_file):
-    try:
-        pdf_text = ""
-        pdf_reader = PdfReader(pdf_file)
-        for page in pdf_reader.pages:
-            pdf_text += page.extract_text()
-        return pdf_text
-    except Exception:
-        return f"Erro, documento não suportado - use WORD ou PDF"
+    pdf_text = ""
+    pdf_reader = PdfReader(pdf_file)
+    for page in pdf_reader.pages:
+        pdf_text += page.extract_text()
+    return pdf_text
+    
 
 @app.route('/resposta', methods=['POST'])
 def resposta():
