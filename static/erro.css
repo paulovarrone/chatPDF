@@ -1,5 +1,8 @@
 body {
     background-image: url(./photos/RJ10.jpg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #e {
@@ -7,6 +10,14 @@ body {
     flex-direction: column;
     align-items: center;
     margin: 300px;
+
+    
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: justify;
+   
 }
 
 .erro {
