@@ -8,6 +8,7 @@ body {
     align-items: center;
     justify-content: center;
     background-image: url(./photos/RJ10.jpg);
+    background-size: cover;
 }
 
 h1 {
