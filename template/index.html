@@ -45,12 +45,16 @@
 
     {% if resposta %}
     <div id="resp">
-        
-        <h2>Resposta:</h2>
+        <div class="separador">
+            <h2>Resposta:  </h2>
+            <button id="btn" type="submit">Refazer resposta</button>
+        </div>
         <pre id="resposta">{{ resposta }}</pre>
         
     </div>
     {% endif %}
     
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
 </body>
 </html>
