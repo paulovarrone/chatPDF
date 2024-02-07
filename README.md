@@ -1,6 +1,8 @@
 # Leitor de Arquivo PDF com Chat GPT
 
-Este projeto permite que você envie um arquivo PDF ou Word, o conteudo do texto é extraido, lido e de acordo com sua pergunta, respondido.
+**Este projeto permite que você envie um arquivo PDF ou Word, o conteudo do texto é extraido, lido e de acordo com sua pergunta, respondido.**
+
+**Não é necessário ficar reenviando o arquivo toda vez que for fazer uma pergunta relacionada ao mesmo texto, o mesmo é salvo na aplicação do flask**
 
 ## Configuração do Backend
 
