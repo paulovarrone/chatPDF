@@ -14,7 +14,7 @@ COPY . .
 
 # Configura a variável de ambiente para especificar o arquivo de aplicação Flask
 ENV FLASK_APP=apigtp.py
-ENV OPENAI_API_KEY=SUA API AQUI
+ENV OPENAI_API_KEY=su api aqui
 # Expõe a porta 5000
 EXPOSE 5000
 
