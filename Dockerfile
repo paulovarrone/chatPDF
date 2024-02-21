@@ -14,9 +14,9 @@ COPY . .
 
 # Configura a variável de ambiente para especificar o arquivo de aplicação Flask
 ENV FLASK_APP=apigtp.py
-ENV OPENAI_API_KEY=API KEY
-# Expõe a porta 8000
-EXPOSE 8000
+ENV OPENAI_API_KEY=SUA API AQUI
+# Expõe a porta 5000
+EXPOSE 5000
 
 # Comando para iniciar a aplicação Flask
-CMD ["flask", "run", "--host=0.0.0.0", "--port=8000"]
+CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]
