@@ -5,12 +5,14 @@ import tempfile
 import os
 import tiktoken
 import docx2txt
+import datetime
 
 client = OpenAI()
 
 app = Flask(__name__, template_folder='template')
 app.config['UPLOAD_FOLDER'] = tempfile.mkdtemp()
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
 
 
 custo_acumulado = [0]
@@ -47,9 +49,57 @@ def resposta():
             uploaded_file.save(file_path)
             session['file_path'] = file_path  
 
-        
+        data_atual = datetime.datetime.now()
+        numero_mes = data_atual.month
+
+        mes_str = {
+            1: "Janeiro",
+            2: "Fevereiro",
+            3: "Março",
+            4: "Abril",
+            5: "Maio",
+            6: "Junho",
+            7: "Julho",
+            8: "Agosto",
+            9: "Setembro",
+            10: "Outubro",
+            11: "Novembro",
+            12: "Dezembro"
+        }[numero_mes]
+
+        data_formatada = data_atual.strftime("%d de {} de %Y".format(mes_str))     
+
         pergunta = request.form['pergunta']
-        conteudo = "Você está respondendo a perguntas sobre o conteúdo do documento, fique atento e extraia cada palavra para conseguir interpretar bem as perguntas, sendo que você é um procurador experiente do município do estado do Rio de Janeiro."
+        conteudo = f"""Faça uma contestação.
+
+        Certifique-se de incluir:
+
+        AGRAVO DE INSTRUMENTO
+        Nº do Processo: 
+        Agravante: 
+        Agravados: 
+
+        Breve resumo do agravo de instrumento.
+
+        Análise da Tempestividade: Confirme se a contestação está sendo feita dentro do prazo legal.
+
+        Impugnação Específica dos Fatos: Indique como negar, admitir ou declarar desconhecimento dos fatos alegados pela parte autora.
+
+        Fundamentação Legal: Apresente as leis, jurisprudências e doutrinas que suportam a defesa.
+
+        Apresentação de Provas: Especifique as provas que serão usadas para contestar as alegações da parte autora, como documentos, testemunhos, entre outros.
+
+        Questões Preliminares e Processuais: Argumente sobre eventuais questões processuais que possam desqualificar a petição inicial ou exigir sua completa reformulação.
+
+        Formulação do Mérito e do Pedido: Desenvolva os argumentos de mérito contra os pedidos da parte autora e formule os pedidos específicos na contestação.
+
+        Endereçamento Correto e Evitar a Preclusão: Garanta que a contestação esteja corretamente endereçada e discuta estratégias para evitar a preclusão de defesas e argumentos. 
+
+        
+        Deve ser incluido no final da resposta com apenas uma quebra de linha:
+            as informações do advogado, nome do advogado e seu registro de OAB. 
+            {data_formatada} no documento.
+        """
 
 
         file_path = session.get('file_path', '')
